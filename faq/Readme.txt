@@ -1,4 +1,6 @@
-FAQ plugin for Elgg
+FAQ plugin for Elgg 1.8
+Latest Version: 1.8.2
+Released: 2012-06-30
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (C) iionly 2012, (C) ColdTrick 2009
@@ -22,6 +24,11 @@ Installation:
 
 
 Version History
+
+1.8.2 (by iionly):
+
+    - Getting FAQ plugin to work for logged-out site visitors when walled-garden option is enabled,
+    - Added German translation.
 
 1.8.1 (by iionly):
 

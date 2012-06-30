@@ -33,6 +33,9 @@ function faq_init() {
             faq_setup_footer_menu();
         }
 
+        // Register faq pages as public pages for walled-garden
+        elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'faq_public');
+
         // Register Actions
         elgg_register_action("faq/add", $CONFIG->pluginspath . "faq/actions/faq/add.php", "admin");
         elgg_register_action("faq/delete", $CONFIG->pluginspath . "faq/actions/faq/delete.php", "admin");
@@ -48,6 +51,11 @@ function faq_init() {
         // Register subtype
         add_subtype("object", "faq");
     }
+}
+
+function faq_public($hook, $handler, $return, $params) {
+    $pages = array('faq', 'faq/list', 'action/faq/search');
+    return array_merge($pages, $return);
 }
 
 function faq_page_handler($page) {
