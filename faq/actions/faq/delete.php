@@ -4,7 +4,7 @@
  *
  * @module faq
  * @author ColdTrick
- * @copyright ColdTrick 2009
+ * @copyright ColdTrick 2009-2013
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * @link http://www.coldtrick.com
  *
@@ -12,17 +12,12 @@
  * iionly@gmx.de
  */
 
-global $CONFIG;
-
-action_gatekeeper();
-admin_gatekeeper();
-
-$id = get_input("guid");
+$id = (int)get_input("guid");
 
 if(!empty($id)) {
     $faq = get_entity($id);
 
-    if(!empty($faq) && $faq instanceof ElggObject && $faq->getSubtype() == "faq") {
+    if(!empty($faq) && $faq instanceof FAQObject) {
         if($faq->delete()) {
             system_message(elgg_echo("faq:delete:success"));
         } else {
@@ -35,4 +30,4 @@ if(!empty($id)) {
     register_error(elgg_echo("faq:delete:error:invalid_input"));
 }
 
-forward($_SERVER["HTTP_REFERER"]);
+forward(REFERER);

@@ -6,7 +6,7 @@ $english = array(
 'faq:shorttitle' => "FAQ",
 'faq:sidebar:categories' => "Categories in FAQ",
 
-'item:object:faq' => "FAQ Object",
+'item:object:faq' => "FAQs",
 
 // add
 'faq:add' => "New FAQ",
@@ -66,7 +66,7 @@ $english = array(
 'faq:list:edit:select:new' => "- Create a new category",
 
 // Change category
-'faq:change_category:description' => "Select at least one of the questions above you want to move to another category. Then select the new category below.",
+'faq:change_category:description' => "Select at least one of the questions above you want to move to another category. Then select the new category below. (Hint: for renaming a category select all questions of this category and enter the new category name below.)",
 'faq:change_category:new_category' => "New category: ",
 'faq:change_category:error:input' => "Invalid input provided.",
 'faq:change_category:error:no_faq' => "No FAQ objects provided.",

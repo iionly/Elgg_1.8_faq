@@ -1,9 +1,9 @@
 FAQ plugin for Elgg 1.8
-Latest Version: 1.8.2
-Released: 2012-06-30
+Latest Version: 1.8.3
+Released: 2013-09-29
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
-Copyright: (C) iionly 2012, (C) ColdTrick 2009
+Copyright: (C) iionly 2012-2013, (C) ColdTrick 2009-2013
 
 
 
@@ -24,6 +24,13 @@ Installation:
 
 
 Version History
+
+1.8.3 (by iionly):
+
+    - Some general code cleanup,
+    - FAQ answer output in html instead of plain text (so formatting on input should show up on output),
+    - FAQs to show up in site search results if matching seach query,
+    - Fixed bug on answering user questions form that made category selection dropdown input behaving awkward (due to a missing </label>).
 
 1.8.2 (by iionly):
 

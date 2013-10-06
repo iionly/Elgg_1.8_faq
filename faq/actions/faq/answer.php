@@ -4,18 +4,13 @@
  *
  * @module faq
  * @author ColdTrick
- * @copyright ColdTrick 2009
+ * @copyright ColdTrick 2009-2013
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * @link http://www.coldtrick.com
  *
  * Updated for Elgg 1.8 by iionly
  * iionly@gmx.de
  */
-
-global $CONFIG;
-
-action_gatekeeper();
-admin_gatekeeper();
 
 $guid = get_input("guid");
 $question = get_input("question");
@@ -24,7 +19,7 @@ $addFAQ = get_input("add");
 $answer = get_input("textanswer".$guid);
 $oldCat = get_input("oldCat");
 $newCat = get_input("newCat");
-$access = (int) get_input("access");
+$access = (int)get_input("access");
 
 if(!empty($guid) && !empty($question) && !empty($orgQuestion) && !empty($addFAQ) && !empty($answer)) {
     $faq = get_entity($guid);
@@ -57,18 +52,18 @@ if(!empty($guid) && !empty($question) && !empty($orgQuestion) && !empty($addFAQ)
                 $faq->category = $cat;
                 $faq->access_id = $access;
 
-                $faq->container_guid = $CONFIG->site_guid;
-                $faq->owner_guid = $CONFIG->site_guid;
+                $faq->container_guid = elgg_get_config('site_guid');
+                $faq->owner_guid = elgg_get_config('site_guid');
 
                 if(elgg_delete_metadata(array('guid' => $faq->guid, 'metadata_name' => "userQuestion", 'metadata_value' => true, 'limit' => 0))) {
                     if($faq->save()) {
-                        $url = $CONFIG->wwwroot . "faq/list?categoryId=" . get_metastring_id($faq->category) . "#qID" . $faq->guid;
+                        $url = elgg_get_site_url() . "faq/list?categoryId=" . get_metastring_id($faq->category) . "#qID" . $faq->guid;
                         if($same) {
                             // notify user, question added and not adjusted
-                            $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), sprintf(elgg_echo("faq:answer:notify:message:added:same"), $question, $url));
+                            $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:message:added:same", array($question, $url)));
                         } else {
                             // notify user, question added and adjusted
-                            $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), sprintf(elgg_echo("faq:answer:notify:message:added:adjusted"), $orgQuestion, $question, $url));
+                            $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:message:added:adjusted", array($orgQuestion, $question, $url)));
                         }
 
                         if(in_array(true, $result)) {
@@ -90,9 +85,9 @@ if(!empty($guid) && !empty($question) && !empty($orgQuestion) && !empty($addFAQ)
             $user = get_user($faq->owner_guid);
 
             if($question == $orgQuestion) {
-                $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), sprintf(elgg_echo("faq:answer:notify:not_added:same"), $question, $answer));
+                $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:not_added:same", array($question, $answer)));
             } else {
-                $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), sprintf(elgg_echo("faq:answer:notify:not_added:adjusted"), $orgQuestion, $question, $answer));
+                $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:not_added:adjusted", array($orgQuestion, $question, $answer)));
             }
 
             $faq->delete();
@@ -110,4 +105,4 @@ if(!empty($guid) && !empty($question) && !empty($orgQuestion) && !empty($addFAQ)
     register_error(elgg_echo("faq:answer:error:input"));
 }
 
-forward($_SERVER["HTTP_REFERER"]);
+forward(REFERER);

@@ -12,7 +12,7 @@
     cursor: pointer;
     width:14px;
     height:14px;
-    background: url("<?php echo $vars['url']; ?>mod/faq/_graphics/edit.png") no-repeat 0 0;
+    background: url("<?php echo elgg_get_config('wwwroot'); ?>mod/faq/_graphics/edit.png") no-repeat 0 0;
 }
 
 .answer {

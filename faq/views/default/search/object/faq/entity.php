@@ -1,8 +1,6 @@
 <?php
 
 $faq = $vars["entity"];
-$selected = $vars["selected"];
-$hitcount = $vars["hitcount"];
 
 if(elgg_is_admin_logged_in()) {
     $delBody = elgg_view("input/hidden", array("name" => "guid", "value" => $faq->guid));
@@ -18,15 +16,8 @@ if(elgg_is_admin_logged_in()) {
                 <td><div id="faqSelect<?php echo $faq->guid; ?>" class="faqSelect"><input type="checkbox" name="selectQuestion" id="selectQuestion<?php echo $faq->guid; ?>" value="<?php echo $faq->guid; ?>" /></div></td>
             <?php } ?>
             <td width="100%">
-                <?php if(!empty($hitcount)) { ?>
-                    <a href="<?php elgg_get_site_url(); ?>faq/list?categoryId=<?php echo get_metastring_id($faq->category); ?>"><?php echo $faq->category; ?></a>&nbsp;>
-                <?php } ?>
                 <a href="javascript:void(0);" id="qID<?php echo $faq->guid; ?>" onClick="$('#aID<?php echo $faq->guid; ?>').toggle();"><?php echo $faq->question; ?></a>
             </td>
-            <?php if(!empty($hitcount)) { ?>
-                <!-- Hitcounter -->
-                <td class="hitcount"><?php echo elgg_echo("faq:search:hitcount") . " " . $hitcount; ?></td>
-            <?php } ?>
             <?php if(elgg_is_admin_logged_in()) { ?>
                 <!-- ADMIN options -->
                 <td>

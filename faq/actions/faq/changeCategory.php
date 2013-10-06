@@ -4,18 +4,13 @@
  *
  * @module faq
  * @author ColdTrick
- * @copyright ColdTrick 2009
+ * @copyright ColdTrick 2009-2013
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * @link http://www.coldtrick.com
  *
  * Updated for Elgg 1.8 by iionly
  * iionly@gmx.de
  */
-
-global $CONFIG;
-
-action_gatekeeper();
-admin_gatekeeper();
 
 $category = get_input("category");
 $faqGuids = get_input("faqGuid");
@@ -44,7 +39,7 @@ if(!empty($category) && !empty($faqGuids) && is_array($faqGuids)) {
 }
 
 if($success) {
-    forward($CONFIG->wwwroot . "faq/list?categoryId=" . get_metastring_id($category));
+    forward(elgg_get_site_url() . "faq/list?categoryId=" . get_metastring_id($category));
 } else {
-    forward($_SERVER["HTTP_REFERER"]);
+    forward(REFERER);
 }

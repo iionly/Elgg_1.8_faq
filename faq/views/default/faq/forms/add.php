@@ -1,7 +1,5 @@
 <?php
 
-global $CONFIG;
-
 $id = get_input("id");
 
 if(!empty($id)) {
@@ -9,7 +7,7 @@ if(!empty($id)) {
     $faq = get_entity($id);
 }
 
-$count = elgg_get_entities(array('type' => "object", 'subtype' => "faq", 'limit' => 0, 'offset' => 0, 'count' => true));
+$count = elgg_get_entities(array('type' => "object", 'subtype' => "faq", 'limit' => false, 'offset' => 0, 'count' => true));
 $metadatas = elgg_get_metadata(array('annotation_name' => "category", 'type' => "object", 'subtype' => "faq", 'limit' => $count));
 
 $cats = array();
@@ -22,37 +20,37 @@ foreach($metadatas as $metadata) {
 
 $select = "<select name='oldCat' id='oldCat' onChange='checkCat();'>";
 if(!$edit) {
-    $select .= "<option value=''>" . elgg_echo("faq:add:oldcat:please");
+    $select .= "<option value=''>" . elgg_echo("faq:add:oldcat:please") . "</option>";
 }
 
 foreach($cats as $cat) {
     if($edit && $faq->category == $cat) {
-        $select .= "<option SELECTED>" . $cat;
+        $select .= "<option SELECTED>" . $cat . "</option>";
     } else {
-        $select .= "<option>" . $cat;
+        $select .= "<option>" . $cat . "</option>";
     }
 }
 
-$select .= "<option value='newCat'>" . elgg_echo("faq:add:oldcat:new");
+$select .= "<option value='newCat'>" . elgg_echo("faq:add:oldcat:new") . "</option>";
 $select .= "</select>";
 
 // Access Selector
 $accessSelector = "<select name='access'>";
 if($edit) {
     if($faq->access_id == ACCESS_PUBLIC) {
-        $accessSelector .= "<option value='" . ACCESS_PUBLIC . "' selected>" . elgg_echo("PUBLIC");
+        $accessSelector .= "<option value='" . ACCESS_PUBLIC . "' selected>" . elgg_echo("PUBLIC") . "</option>";
     } else {
-        $accessSelector .= "<option value='" . ACCESS_PUBLIC . "'>" . elgg_echo("PUBLIC");
+        $accessSelector .= "<option value='" . ACCESS_PUBLIC . "'>" . elgg_echo("PUBLIC") . "</option>";
     }
 
     if($faq->access_id == ACCESS_LOGGED_IN) {
-        $accessSelector .= "<option value='" . ACCESS_LOGGED_IN . "' selected>" . elgg_echo("LOGGED_IN");
+        $accessSelector .= "<option value='" . ACCESS_LOGGED_IN . "' selected>" . elgg_echo("LOGGED_IN") . "</option>";
     } else {
-        $accessSelector .= "<option value='" . ACCESS_LOGGED_IN . "'>" . elgg_echo("LOGGED_IN");
+        $accessSelector .= "<option value='" . ACCESS_LOGGED_IN . "'>" . elgg_echo("LOGGED_IN") . "</option>";
     }
 } else {
-    $accessSelector .= "<option value='" . ACCESS_PUBLIC . "' selected>" . elgg_echo("PUBLIC");
-    $accessSelector .= "<option value='" . ACCESS_LOGGED_IN . "'>" . elgg_echo("LOGGED_IN");
+    $accessSelector .= "<option value='" . ACCESS_PUBLIC . "' selected>" . elgg_echo("PUBLIC") . "</option>";
+    $accessSelector .= "<option value='" . ACCESS_LOGGED_IN . "'>" . elgg_echo("LOGGED_IN") . "</option>";
 }
 $accessSelector .= "</select>";
 
@@ -65,7 +63,7 @@ if($edit) {
 }
 $addBody .= "<label>" . elgg_echo("faq:add:category") . "</label><br>";
 $addBody .= $select . "<br>";
-$addBody .= elgg_view("input/text", array("name" => "newCat", "disabled" => true)) . "<br><br>";
+$addBody .= elgg_view("input/text", array("name" => "newCat", "disabled" => "disabled")) . "<br><br>";
 $addBody .= "<label>" . elgg_echo("faq:add:answer") . "</label>";
 if($edit) {
     $addBody .= elgg_view("input/longtext", array("name" => "answer", "value" => $faq->answer)) . "<br>";
@@ -82,12 +80,12 @@ if($edit) {
     $addForm = elgg_view("input/form", array("name" => "editForm",
                          "id" => "questionForm",
                          "body" => $addBody,
-                         "action" => $CONFIG->wwwroot . "action/faq/edit"));
+                         "action" => elgg_get_site_url() . "action/faq/edit"));
 } else {
     $addForm = elgg_view("input/form", array("name" => "addForm",
                          "id" => "questionForm",
                          "body" => $addBody,
-                         "action" => $CONFIG->wwwroot . "action/faq/add"));
+                         "action" => elgg_get_site_url() . "action/faq/add"));
 }
 
 ?>
@@ -97,7 +95,9 @@ if($edit) {
         var cat = $('#oldCat').val();
 
         if(cat == "newCat"){
-            $('input[name="newCat"]').removeAttr("disabled").removeAttr("readonly");
+            $('input[name="newCat"]').removeAttr("disabled");
+            $('input[name="newCat"]').removeAttr("readonly");
+            $('input[name="newCat"]').focus();
         } else {
             $('input[name="newCat"]').attr("disabled", "disabled");
         }

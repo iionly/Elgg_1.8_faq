@@ -1,7 +1,5 @@
 <?php
 
-global $CONFIG;
-
 $catId = (int)get_input("categoryId");
 if(!empty($catId)) {
     $cats = getCategories();
@@ -18,15 +16,15 @@ if(!empty($catId)) {
                 $display .= elgg_view("object/faq", array("entity" => $faq));
             }
         } else {
-            forward($CONFIG->wwwroot . "faq/");
+            forward(elgg_get_site_url() . "faq/");
         }
     } else {
         register_error(elgg_echo("faq:list:no_category"));
-        forward($CONFIG->wwwroot . "faq/");
+        forward(elgg_get_site_url() . "faq/");
     }
 } else {
     register_error(elgg_echo("faq:list:no_category"));
-    forward($CONFIG->wwwroot . "faq/");
+    forward(elgg_get_site_url() . "faq/");
 }
 
 ?>
@@ -155,7 +153,7 @@ if(elgg_is_admin_logged_in() && !empty($catId)) {
             </select>
             <br><br>
             <input class="elgg-button elgg-button-cancel" type="button" name="cancel" value="<?php echo elgg_echo("cancel"); ?>" onClick="hideEditOptions();" />
-                <?php echo elgg_view("input/form", array("id" => "changeCategoryForm", "action" => $CONFIG->wwwroot . "action/faq/changeCategory")); ?>
+                <?php echo elgg_view("input/form", array("id" => "changeCategoryForm", "action" => elgg_get_site_url() . "action/faq/changeCategory")); ?>
         </div>
         <div class="clearFloat"></div>
     </div>

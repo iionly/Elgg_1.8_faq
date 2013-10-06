@@ -6,7 +6,7 @@ $german = array(
 'faq:shorttitle' => "FAQ",
 'faq:sidebar:categories' => "FAQ-Kategorien",
 
-'item:object:faq' => "FAQ-Objekt",
+'item:object:faq' => "FAQs",
 
 // add
 'faq:add' => "Neue FAQ",
@@ -66,7 +66,7 @@ $german = array(
 'faq:list:edit:select:new' => "- Eine neue Kategorie anlegen",
 
 // Change category
-'faq:change_category:description' => "Wähle mindestens eine der oben aufgelisteten Fragen aus, um sie in eine andere Kategorie zu verschieben. Dann wähle eine der unten aufgeführten Kategorien als neue Kategorie aus.",
+'faq:change_category:description' => "Wähle mindestens eine der oben aufgelisteten Fragen aus, um sie in eine andere Kategorie zu verschieben. Dann wähle eine der unten aufgeführten Kategorien als neue Kategorie aus. (Hinweis: um eine Kategorie umzubenennen, wähle alle Fragen dieser Kategorie aus und gebe unten den neuen Namen der Kategorie ein.)",
 'faq:change_category:new_category' => "Neue Kategorie: ",
 'faq:change_category:error:input' => "Unzulässige bzw. falsche Eingabe.",
 'faq:change_category:error:no_faq' => "Es wurde kein FAQ-Objekt übergeben.",

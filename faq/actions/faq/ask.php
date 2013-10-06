@@ -4,7 +4,7 @@
  *
  * @module faq
  * @author ColdTrick
- * @copyright ColdTrick 2009
+ * @copyright ColdTrick 2009-2013
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * @link http://www.coldtrick.com
  *
@@ -12,20 +12,14 @@
  * iionly@gmx.de
  */
 
-global $CONFIG;
-
-action_gatekeeper();
-gatekeeper();
-
 $question = get_input("question");
-$guid = get_input("userGuid");
+$guid = (int)get_input("userGuid");
 
 if(!empty($question) && !empty($guid)) {
     $user = get_user($guid);
 
     if(!empty($user)) {
-        $faq = new ElggObject();
-        $faq->subtype = "faq";
+        $faq = new FAQObject();
 
         $faq->container_guid = $user->guid;
         $faq->owner_guid = $user->guid;
@@ -34,7 +28,7 @@ if(!empty($question) && !empty($guid)) {
         $faq->userQuestion = true;
 
         if($faq->save()) {
-            $notify = notify_user($user->guid, $user->site_guid, elgg_echo("faq:ask:new_question:subject"), sprintf(elgg_echo("faq:ask:new_question:message"), $question));
+            $notify = notify_user($user->guid, $user->site_guid, elgg_echo("faq:ask:new_question:subject"), elgg_echo("faq:ask:new_question:message", array($question)));
             $admins = notifyAdminNewQuestion();
 
             if(in_array(true, $notify)) {
@@ -52,4 +46,4 @@ if(!empty($question) && !empty($guid)) {
     register_error("faq:ask:error:input");
 }
 
-forward($CONFIG->wwwroot . "faq");
+forward(elgg_get_site_url() . "faq");

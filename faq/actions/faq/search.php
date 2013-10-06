@@ -4,17 +4,13 @@
  *
  * @module faq
  * @author ColdTrick
- * @copyright ColdTrick 2009
+ * @copyright ColdTrick 2009-2013
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * @link http://www.coldtrick.com
  *
  * Updated for Elgg 1.8 by iionly
  * iionly@gmx.de
  */
-
-global $CONFIG;
-
-action_gatekeeper();
 
 $minimum_tag_length = elgg_get_plugin_setting("minimumSearchTagSize","faq");
 if(!$minimum_tag_length) {

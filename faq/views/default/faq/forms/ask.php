@@ -7,7 +7,7 @@ $formBody .= elgg_view("input/hidden", array("name" => "userGuid", "value" => $u
 $formBody .= elgg_echo("faq:ask:description") . "<br><br>";
 $formBody .= elgg_view("input/submit", array("name" => "submit", "value" => elgg_echo("faq:ask:button")));
 
-$form = elgg_view("input/form", array("action" => $CONFIG->wwwroot . "action/faq/ask", "body" => $formBody));
+$form = elgg_view("input/form", array("action" => elgg_get_site_url(). "action/faq/ask", "body" => $formBody));
 
 ?>
 

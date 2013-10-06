@@ -4,7 +4,7 @@
  *
  * @module faq
  * @author ColdTrick
- * @copyright ColdTrick 2009
+ * @copyright ColdTrick 2009-2013
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * @link http://www.coldtrick.com
  *
@@ -12,16 +12,11 @@
  * iionly@gmx.de
  */
 
-global $CONFIG;
-
-action_gatekeeper();
-admin_gatekeeper();
-
 $question = get_input("question");
 $answer = get_input("answer");
 $oldCat = get_input("oldCat");
 $newCat = get_input("newCat");
-$access = (int) get_input("access");
+$access = (int)get_input("access");
 
 if(!empty($question) && !empty($answer) && !empty($access) && (!empty($oldCat) || !empty($newCat))) {
     $cat = "";
@@ -32,11 +27,10 @@ if(!empty($question) && !empty($answer) && !empty($access) && (!empty($oldCat) |
     }
 
     if(!empty($cat)) {
-        $faq = new ElggObject();
-        $faq->subtype = "faq";
+        $faq = new FAQObject();
 
-        $faq->container_guid = $CONFIG->site_guid;
-        $faq->owner_guid = $CONFIG->site_guid;
+        $faq->container_guid = elgg_get_config('site_guid');
+        $faq->owner_guid = elgg_get_config('site_guid');
 
         $faq->category = $cat;
         $faq->question = $question;
@@ -55,4 +49,4 @@ if(!empty($question) && !empty($answer) && !empty($access) && (!empty($oldCat) |
     register_error(elgg_echo("faq:add:error:invalid_input"));
 }
 
-forward($CONFIG->wwwroot . "faq/list?categoryId=" . get_metastring_id($faq->category));
+forward(elgg_get_site_url() . "faq/list?categoryId=" . get_metastring_id($faq->category));

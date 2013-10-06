@@ -2,14 +2,14 @@
 
 elgg_register_menu_item('page', array('name' => elgg_echo("faq:search:title"),
                                       'text' => elgg_echo("faq:search:title"),
-                                      'href' => $CONFIG->wwwroot . "faq/",
+                                      'href' => elgg_get_site_url() . "faq/",
                                       'section' => 'a',
                                       'context' => 'faq'));
 
 if(elgg_is_logged_in() && elgg_get_plugin_setting("userQuestions", "faq") == "yes"){
     elgg_register_menu_item('page', array('name' => elgg_echo("faq:ask"),
                                           'text' => elgg_echo("faq:ask"),
-                                          'href' => $CONFIG->wwwroot . "faq/ask",
+                                          'href' => elgg_get_site_url() . "faq/ask",
                                           'section' => 'b',
                                           'context' => 'faq'));
 }
@@ -17,12 +17,12 @@ if(elgg_is_logged_in() && elgg_get_plugin_setting("userQuestions", "faq") == "ye
 if(elgg_is_admin_logged_in()){
     elgg_register_menu_item('page', array('name' => elgg_echo("faq:add"),
                                           'text' => elgg_echo("faq:add"),
-                                          'href' => $CONFIG->wwwroot . "faq/add",
+                                          'href' => elgg_get_site_url() . "faq/add",
                                           'section' => 'c',
                                           'context' => 'faq'));
-    elgg_register_menu_item('page', array('name' => sprintf(elgg_echo("faq:asked"), getUserQuestionsCount()),
-                                          'text' => sprintf(elgg_echo("faq:asked"), getUserQuestionsCount()),
-                                          'href' => $CONFIG->wwwroot . "faq/asked",
+    elgg_register_menu_item('page', array('name' => elgg_echo("faq:asked", array(getUserQuestionsCount())),
+                                          'text' => elgg_echo("faq:asked", array(getUserQuestionsCount())),
+                                          'href' => elgg_get_site_url() . "faq/asked",
                                           'section' => 'c',
                                           'context' => 'faq'));
 }

@@ -1,7 +1,5 @@
 <?php
 
-global $CONFIG;
-
 $minimum_tag_length = elgg_get_plugin_setting("minimumSearchTagSize","faq");
 if(!$minimum_tag_length) {
     $minimum_tag_length = 3;
@@ -22,7 +20,7 @@ $search_description = elgg_echo("faq:search:description", array($minimum_tag_len
                 $('#waiting').show();
                 $('#result').html('');
 
-                $.post("<?php echo $CONFIG->wwwroot . 'action/faq/search'; ?>", $('#searchForm').serialize(), function(data){
+                $.post("<?php echo elgg_get_config('wwwroot') . 'action/faq/search'; ?>", $('#searchForm').serialize(), function(data){
                     $('#result').html(data);
                     $('#waiting').hide();
                     $('#result').show();
@@ -51,5 +49,5 @@ $search_description = elgg_echo("faq:search:description", array($minimum_tag_len
 
 <div id="result" style="display:none;"></div>
 <div id="waiting" style="display:none;">
-    <img src="<?php echo $CONFIG->wwwroot; ?>_graphics/ajax_loader.gif" />
+    <img src="<?php echo elgg_get_config('wwwroot'); ?>_graphics/ajax_loader.gif" />
 </div>

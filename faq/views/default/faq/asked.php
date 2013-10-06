@@ -11,7 +11,7 @@ if($allow) {
                                                    'metadata_value' => true,
                                                    'type' => "object",
                                                    'subtype' => "faq",
-                                                   'limit' => 0,
+                                                   'limit' => false,
                                                    'count' => true));
 
     if($count > 0) {
@@ -25,23 +25,27 @@ if($allow) {
         $categories = getCategories();
 
         foreach($open as $faq) {
-            $content .= "<div class='askedQuestion' id='question" . $faq->guid . "'><table><tr><td class='askedLink''><a href='javascript:void(0);' onClick='show(" . $faq->guid . ");'>" . $faq->question . "</a></td><td class='askedSince'>" . elgg_echo("faq:asked:added") . " " . elgg_view_friendly_time($faq->time_created) . "</td></tr></table></div>\n";
+            $content .= "<div class='askedQuestion' id='question" . $faq->guid . "'><table><tr><td class='askedLink'><a href='javascript:void(0);' onClick='show(" . $faq->guid . ");'>" . $faq->question . "</a></td><td class='askedSince'>" . elgg_echo("faq:asked:added") . " " . elgg_view_friendly_time($faq->time_created) . "</td></tr></table></div>\n";
             $content .= "<div class='clearfloat'></div>";
 
             // Category selector
-            $select = "<select name='oldCat' id='oldCat' onChange='checkCat(" . $faq->guid . ");'>";
-            $select .= "<option value=''>" . elgg_echo("faq:add:oldcat:please") . "</option>";
+            $category_option_values = array('' => elgg_echo("faq:add:oldcat:please"));
             foreach($categories as $cat) {
-                $select .= "<option>" . $cat . "</option>";
+                $category_option_values[$cat] = $cat;
             }
-            $select .= "<option value='newCat'>" . elgg_echo("faq:add:oldcat:new") . "</option>";
-            $select .= "</select>";
+            $category_option_values['newCat'] = elgg_echo("faq:add:oldcat:new");
+            $select = elgg_view("input/dropdown", array('name' => 'oldCat',
+                                                        'id' => 'oldCat',
+                                                        'options_values' => $category_option_values,
+                                                        'disabled' => 'disabled',
+                                                        'js' => 'onChange="checkCat('.$faq->guid.')"'));
 
             // Access selector
-            $accessSelector = "<select name='access' id='access'>";
-            $accessSelector .= "<option value='" . ACCESS_PUBLIC . "' selected>" . elgg_echo("PUBLIC") . "</option>";
-            $accessSelector .= "<option value='" . ACCESS_LOGGED_IN . "'>" . elgg_echo("LOGGED_IN") . "</option>";
-            $accessSelector .= "</select>";
+            $accessSelector = elgg_view("input/dropdown", array('name' => 'access',
+                                                                'id' => 'access',
+                                                                'options_values' => array('ACCESS_PUBLIC' => elgg_echo("PUBLIC"), 'ACCESS_LOGGED_IN' => elgg_echo("LOGGED_IN")),
+                                                                'value' => ACCESS_PUBLIC,
+                                                                'disabled' => 'disabled'));
 
             // User who asked the question
             $user = get_user($faq->owner_guid);
@@ -54,11 +58,11 @@ if($allow) {
             $formElements .= "<br><br>";
             $formElements .= "<label>" . elgg_echo("faq:asked:add") . "</label><br>";
             $formElements .= "<input type='radio' name='add' value='yes' onChange='addQuestion(" . $faq->guid . ");'>" . elgg_echo("option:yes");
-            $formElements .= "<input type='radio' name='add' value='no' onChange='addQuestion(" . $faq->guid . ");'>" . elgg_echo("option:no");
+            $formElements .= "<input type='radio' name='add' value='no' checked='checked' onChange='addQuestion(" . $faq->guid . ");'>" . elgg_echo("option:no");
             $formElements .= "<br><br>";
-            $formElements .= "<label>" . elgg_echo("faq:add:category") . "<br>";
+            $formElements .= "<label>" . elgg_echo("faq:add:category") . "</label><br>";
             $formElements .= $select . "<br>";
-            $formElements .= elgg_view("input/text", array("name" => "newCat", "disabled" => true)) . "<br><br>";
+            $formElements .= elgg_view("input/text", array("name" => "newCat", "disabled" => "disabled")) . "<br><br>";
             $formElements .= "<label>" . elgg_echo("faq:add:answer") . "</label>";
             $formElements .= elgg_view("input/longtext", array("name" => "textanswer".$faq->guid)) . "<br>";
             $formElements .= "<label>" . elgg_echo("access") . "</label><br>";
@@ -67,20 +71,20 @@ if($allow) {
             $formElements .= elgg_view("input/reset", array("name" => "cancel", "value" => elgg_echo("cancel"), "type" => "reset", "js" => "onClick='cancelForm(" . $faq->guid . ");'"));
 
             $form = elgg_view("input/form", array("name" => "answer",
-                              "id" => "answer" . $faq->guid,
-                              "body" => $formElements,
-                              "action" => $CONFIG->wwwroot . "action/faq/answer"));
+                                                  "id" => "answer" . $faq->guid,
+                                                  "body" => $formElements,
+                                                  "action" => elgg_get_site_url() . "action/faq/answer"));
 
             $content .= "<div class='askedAnswer' id='formDiv" . $faq->guid . "'>\n";
             $content .= $form;
             $content .= "</div>\n";
             $content .= '<script type="text/javascript">';
             $content .= "$(document).ready(function(){";
-            $content .= "	$('#answer".$faq->guid."').each(function(){";
-            $content .= "		$('#' + this.id).submit(function(){";
-            $content .= "			return validateForm(this);";
-            $content .= "		});";
-            $content .= "	});";
+            $content .= "    $('#answer".$faq->guid."').each(function(){";
+            $content .= "        $('#' + this.id).submit(function(){";
+            $content .= "            return validateForm(this);";
+            $content .= "        });";
+            $content .= "    });";
             $content .= "});";
             $content .= '</script>';
         }
@@ -122,9 +126,9 @@ if($allow) {
             $("#answer" + id + " #access").removeAttr("readonly");
             checkCat(id);
         } else {
-            $("#answer" + id + " #oldCat").attr("disabled", true);
-            $("#answer" + id + " #access").attr("disabled", true);
-            $("#answer" + id + " input[name='newCat']").attr("disabled", true);
+            $("#answer" + id + " #oldCat").attr("disabled", "disabled");
+            $("#answer" + id + " #access").attr("disabled", "disabled");
+            $("#answer" + id + " input[name='newCat']").attr("disabled", "disabled");
         }
     }
 
@@ -132,9 +136,11 @@ if($allow) {
         var cat = $("#answer" + id + " #oldCat").val();
 
         if(cat == "newCat"){
-            $("#answer" + id + " input[name='newCat']").removeAttr("disabled").removeAttr("readonly");
+            $("#answer" + id + " input[name='newCat']").removeAttr("disabled");
+            $("#answer" + id + " input[name='newCat']").removeAttr("readonly");
+            $("#answer" + id + " input[name='newCat']").focus();
         } else {
-            $("#answer" + id + " input[name='newCat']").attr("disabled", true);
+            $("#answer" + id + " input[name='newCat']").attr("disabled", "disabled");
         }
     }
 
@@ -145,7 +151,7 @@ if($allow) {
         var title = $(formID + ' input[name="question"]').val();
         var addVal = $(formID + " input[name='add']:checked").val();
         var oldCat = $(formID + ' #oldCat').val();
-        var text = $(formID + ' textarea[name="text'+form.id+'"]').val();
+        var text = $(formID + ' textarea[name="textanswer'+form.id+'"]').val();
 
         var result = true;
         var focus = false;
@@ -172,7 +178,7 @@ if($allow) {
             }
             // Check new category
             if(oldCat == "newCat"){
-                var newCat = $('input[name="newCat"]').val();
+                var newCat = $(formID + ' input[name="newCat"]').val();
                 if(newCat == ""){
                     result = false;
                     msg = msg + "<?php echo elgg_echo("faq:add:check:category"); ?>\n";
@@ -189,7 +195,7 @@ if($allow) {
             result = false;
             msg = msg + "<?php echo elgg_echo("faq:add:check:answer"); ?>\n";
             if(!focus){
-                $(formID + ' textarea[name="text'+form.id+'"]').focus();
+                $(formID + ' textarea[name="textanswer'+form.id+'"]').focus();
                 focus = true;
             }
         }
