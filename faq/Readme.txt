@@ -1,6 +1,6 @@
 FAQ plugin for Elgg 1.8
-Latest Version: 1.8.3
-Released: 2013-09-29
+Latest Version: 1.8.4
+Released: 2013-10-13
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (C) iionly 2012-2013, (C) ColdTrick 2009-2013
@@ -24,6 +24,9 @@ Installation:
 
 
 Version History
+
+1.8.4 (by iionly):
+    - Fixed error in activate.php.
 
 1.8.3 (by iionly):
 

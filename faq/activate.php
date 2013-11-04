@@ -8,5 +8,5 @@
 if (get_subtype_id('object', 'faq')) {
     update_subtype('object', 'faq', 'FAQObject');
 } else {
-    add_subtype('object', 'badge', 'FAQObject');
+    add_subtype('object', 'faq', 'FAQObject');
 }
