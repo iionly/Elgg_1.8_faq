@@ -76,6 +76,7 @@ $german = array(
 // Ask a question
 'faq:ask' => "Neue Frage",
 'faq:ask:title' => "Bitte stelle Deine Frage",
+'faq:ask:label' => "Du findest auf Deine Frage keine Antwort in den FAQs? Dann stelle hier Deine Frage: ",
 'faq:ask:description' => "Wurde Deine Frage noch nicht in den FAQs beantwortet? Dann stelle hier Deine Frage: ",
 'faq:ask:description' => "(Möglicherweise wird Deine Frage zu den FAQs hinzugefügt, möglicherweise nicht. Auch wenn die Frage nicht zu den FAQs hinzugefügt wird, bekommst Du auf jeden Fall eine Antwort.)",
 'faq:ask:button' => "Fragen",
@@ -110,7 +111,7 @@ Um die ausstehende(n) Frage(n) einzusehen, folge dem Link:
 'faq:asked:not_allowed' => "Im Moment dürfen Benutzer keine Fragen stellen. Falls Du dies erlauben willst, passe die Plugin-Einstellungen entspechend an.",
 'faq:asked:added' => "Hinzugefügt:",
 'faq:asked:add' => "Diese Frage zu den FAQs hinzufügen",
-'faq:asked:by' => "Frage von: %s",
+'faq:asked:by' => "von: ",
 'faq:asked:check:add' => "Anwählen, falls diese Frage zu den FAQs hinzugefügt werden soll",
 
 // Answer an asked question
@@ -166,7 +167,7 @@ Die Frage wurde nicht zu den FAQs hinzugefügt.",
 // Stats page
 'faq:stats:categories' => "Die FAQs umfassen %s Kategorien,",
 'faq:stats:questions' => " mit insgesamt %s Fragen/Antworten.",
-'faq:stats:user' => "Es gibt %s ausstehende Fragen von Benutzern, die noch beantwortet werden müssen.",
+'faq:stats:user' => "Es gibt %s ausstehende Fragen von Benutzern, die noch beantwortet werden müssen."
 );
 
 add_translation("de", $german);

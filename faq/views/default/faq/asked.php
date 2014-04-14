@@ -38,7 +38,7 @@ if($allow) {
                                                         'id' => 'oldCat',
                                                         'options_values' => $category_option_values,
                                                         'disabled' => 'disabled',
-                                                        'js' => 'onChange="checkCat('.$faq->guid.')"'));
+                                                        'onChange' => "checkCat($faq->guid)"));
 
             // Access selector
             $accessSelector = elgg_view("input/dropdown", array('name' => 'access',
@@ -68,7 +68,7 @@ if($allow) {
             $formElements .= "<label>" . elgg_echo("access") . "</label><br>";
             $formElements .= $accessSelector . "<br><br>";
             $formElements .= elgg_view("input/submit", array("name" => "save", "value" => elgg_echo("save"))) . "&nbsp;";
-            $formElements .= elgg_view("input/reset", array("name" => "cancel", "value" => elgg_echo("cancel"), "type" => "reset", "js" => "onClick='cancelForm(" . $faq->guid . ");'"));
+            $formElements .= elgg_view("input/reset", array("name" => "cancel", "value" => elgg_echo("cancel"), "type" => "reset", "onClick" => "cancelForm($faq->guid)"));
 
             $form = elgg_view("input/form", array("name" => "answer",
                                                   "id" => "answer" . $faq->guid,

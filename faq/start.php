@@ -4,7 +4,7 @@
  *
  * @module faq
  * @author ColdTrick
- * @copyright ColdTrick 2009-2013
+ * @copyright ColdTrick 2009-2014
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * @link http://www.coldtrick.com
  *

@@ -170,7 +170,7 @@ Your question was NOT added to the FAQ.",
 // Stats page
 'faq:stats:categories' => "This FAQ contains %s categories,",
 'faq:stats:questions' => " with %s questions/answers in total.",
-'faq:stats:user' => "There are %s outstanding user questions that need an answer.",
+'faq:stats:user' => "There are %s outstanding user questions that need an answer."
 );
 
 add_translation("en", $english);
