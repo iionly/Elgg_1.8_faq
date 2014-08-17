@@ -1,6 +1,6 @@
 FAQ plugin for Elgg 1.8
-Latest Version: 1.8.5
-Released: 2014-04-14
+Latest Version: 1.8.6
+Released: 2014-08-17
 Contact: iionly@gmx.de
 License: GNU General Public License version 2
 Copyright: (C) iionly 2012-2014, (C) ColdTrick 2009-2014
@@ -24,6 +24,9 @@ Installation:
 
 
 Version History
+
+1.8.6 (by iionly):
+    - Added 3 language strings to the language files that were missing (thanks to PixelPop for reporting).
 
 1.8.5 (by iionly):
     - Fix to get answering of user questions working again on Elgg 1.8.19 (thanks to Brett for helping me to sort this out),

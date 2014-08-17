@@ -36,6 +36,9 @@ $german = array(
 // delete
 'faq:delete:confirm' => "Bist Du sicher, dass Du diese FAQ löschen willst?",
 'faq:delete:success' => "Die FAQ wurde gelöscht.",
+'faq:delete:error:delete' => 'Das Löschen der FAQ ist fehlgeschlagen.',
+'faq:delete:error:invalid_object' => 'Fehler beim Löschen: kein gültiges FAQ-Objekt.',
+'faq:delete:error:invalid_input' => 'Fehler beim Löschen: es wurde kein FAQ-Objekt übergeben, das gelöscht werden soll.',
 
 // settings
 'faq:settings:public' => "Soll der FAQ-Bereich für alle sichtbar sein? Ansonsten nur für Admins.",

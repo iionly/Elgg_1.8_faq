@@ -36,6 +36,9 @@ $english = array(
 // delete
 'faq:delete:confirm' => "Are you sure you wish to delete this FAQ?",
 'faq:delete:success' => "Successfully deleted a FAQ.",
+'faq:delete:error:delete' => 'The deletion of the FAQ failed.',
+'faq:delete:error:invalid_object' => 'Error deleting: not a valid FAQ object.',
+'faq:delete:error:invalid_input' => 'Error deleting: no FAQ object provided for deletion.',
 
 // settings
 'faq:settings:public' => "Should the FAQ be publicly available (otherwise only for admins)? ",
