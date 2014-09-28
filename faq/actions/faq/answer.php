@@ -22,87 +22,87 @@ $newCat = get_input("newCat");
 $access = (int)get_input("access");
 
 if(!empty($guid) && !empty($question) && !empty($orgQuestion) && !empty($addFAQ) && !empty($answer)) {
-    $faq = get_entity($guid);
+	$faq = get_entity($guid);
 
-    if($faq->getSubtype() == "faq") {
+	if($faq->getSubtype() == "faq") {
 
-        if($addFAQ == "yes") {
-            // Add to FAQ and answer to User
-            if($oldCat == "newCat" && !empty($newCat)) {
-                $cat = ucfirst(strtolower($newCat));
-            } else {
-                $cat = ucfirst(strtolower($oldCat));
-            }
-            if(!empty($cat)) {
-                // valid category, lets continue
-                $user = get_user($faq->owner_guid);
+		if($addFAQ == "yes") {
+			// Add to FAQ and answer to User
+			if($oldCat == "newCat" && !empty($newCat)) {
+				$cat = ucfirst(strtolower($newCat));
+			} else {
+				$cat = ucfirst(strtolower($oldCat));
+			}
+			if(!empty($cat)) {
+				// valid category, lets continue
+				$user = get_user($faq->owner_guid);
 
-                // Was the question adjusted?
-                if($question == $orgQuestion) {
-                    $same = true;
-                } else {
-                    $same = false;
-                }
+				// Was the question adjusted?
+				if($question == $orgQuestion) {
+					$same = true;
+				} else {
+					$same = false;
+				}
 
-                if(!$same) {
-                    $faq->question = $question;
-                }
+				if(!$same) {
+					$faq->question = $question;
+				}
 
-                $faq->answer = $answer;
-                $faq->category = $cat;
-                $faq->access_id = $access;
+				$faq->answer = $answer;
+				$faq->category = $cat;
+				$faq->access_id = $access;
 
-                $faq->container_guid = elgg_get_config('site_guid');
-                $faq->owner_guid = elgg_get_config('site_guid');
+				$faq->container_guid = elgg_get_config('site_guid');
+				$faq->owner_guid = elgg_get_config('site_guid');
 
-                if(elgg_delete_metadata(array('guid' => $faq->guid, 'metadata_name' => "userQuestion", 'metadata_value' => true, 'limit' => 0))) {
-                    if($faq->save()) {
-                        $url = elgg_get_site_url() . "faq/list?categoryId=" . get_metastring_id($faq->category) . "#qID" . $faq->guid;
-                        if($same) {
-                            // notify user, question added and not adjusted
-                            $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:message:added:same", array($question, $url)));
-                        } else {
-                            // notify user, question added and adjusted
-                            $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:message:added:adjusted", array($orgQuestion, $question, $url)));
-                        }
+				if(elgg_delete_metadata(array('guid' => $faq->guid, 'metadata_name' => "userQuestion", 'metadata_value' => true, 'limit' => 0))) {
+					if($faq->save()) {
+						$url = elgg_get_site_url() . "faq/list?categoryId=" . get_metastring_id($faq->category) . "#qID" . $faq->guid;
+						if($same) {
+							// notify user, question added and not adjusted
+							$result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:message:added:same", array($question, $url)));
+						} else {
+							// notify user, question added and adjusted
+							$result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:message:added:adjusted", array($orgQuestion, $question, $url)));
+						}
 
-                        if(in_array(true, $result)) {
-                            system_message(elgg_echo("faq:answer:success:added:send"));
-                        } else {
-                            register_error(elgg_echo("faq:answer:error:added:not_send"));
-                        }
-                    } else {
-                        register_error(elgg_echo("faq:answer:error:save"));
-                    }
-                } else {
-                    register_error(elgg_echo("faq:answer:error:remove"));
-                }
-            } else {
-                register_error(elgg_echo("faq:answer:error:no_cat"));
-            }
-        } else {
-            // Do not add to FAQ, just answer to the User
-            $user = get_user($faq->owner_guid);
+						if(in_array(true, $result)) {
+							system_message(elgg_echo("faq:answer:success:added:send"));
+						} else {
+							register_error(elgg_echo("faq:answer:error:added:not_send"));
+						}
+					} else {
+						register_error(elgg_echo("faq:answer:error:save"));
+					}
+				} else {
+					register_error(elgg_echo("faq:answer:error:remove"));
+				}
+			} else {
+				register_error(elgg_echo("faq:answer:error:no_cat"));
+			}
+		} else {
+			// Do not add to FAQ, just answer to the User
+			$user = get_user($faq->owner_guid);
 
-            if($question == $orgQuestion) {
-                $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:not_added:same", array($question, $answer)));
-            } else {
-                $result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:not_added:adjusted", array($orgQuestion, $question, $answer)));
-            }
+			if($question == $orgQuestion) {
+				$result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:not_added:same", array($question, $answer)));
+			} else {
+				$result = notify_user($user->guid, $user->site_guid, elgg_echo("faq:answer:notify:subject"), elgg_echo("faq:answer:notify:not_added:adjusted", array($orgQuestion, $question, $answer)));
+			}
 
-            $faq->delete();
+			$faq->delete();
 
-            if(in_array(true, $result)) {
-                system_message(elgg_echo("faq:answer:success:not_added:send"));
-            } else {
-                register_error(elgg_echo("faq:answer:error:not_added:not_send"));
-            }
-        }
-    } else {
-        register_error(elgg_echo("faq:answer:error:no_faq"));
-    }
+			if(in_array(true, $result)) {
+				system_message(elgg_echo("faq:answer:success:not_added:send"));
+			} else {
+				register_error(elgg_echo("faq:answer:error:not_added:not_send"));
+			}
+		}
+	} else {
+		register_error(elgg_echo("faq:answer:error:no_faq"));
+	}
 } else {
-    register_error(elgg_echo("faq:answer:error:input"));
+	register_error(elgg_echo("faq:answer:error:input"));
 }
 
 forward(REFERER);

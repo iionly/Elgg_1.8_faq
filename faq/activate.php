@@ -6,7 +6,7 @@
 
 // register class
 if (get_subtype_id('object', 'faq')) {
-    update_subtype('object', 'faq', 'FAQObject');
+	update_subtype('object', 'faq', 'FAQObject');
 } else {
-    add_subtype('object', 'faq', 'FAQObject');
+	add_subtype('object', 'faq', 'FAQObject');
 }

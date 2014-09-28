@@ -12,10 +12,10 @@ $form = elgg_view("input/form", array("action" => elgg_get_site_url(). "action/f
 ?>
 
 <div>
-    <h3><?php echo elgg_echo("faq:ask:title"); ?></h3><br>
+	<h3><?php echo elgg_echo("faq:ask:title"); ?></h3><br>
 </div>
 
 <div>
-    <label><?php echo elgg_echo("faq:ask:label"); ?></label><br>
-    <?php echo $form; ?>
+	<label><?php echo elgg_echo("faq:ask:label"); ?></label><br>
+	<?php echo $form; ?>
 </div>

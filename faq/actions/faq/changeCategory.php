@@ -18,28 +18,28 @@ $faqGuids = get_input("faqGuid");
 $success = false;
 
 if(!empty($category) && !empty($faqGuids) && is_array($faqGuids)) {
-    foreach($faqGuids as $faqGuid) {
-        $faq = get_entity($faqGuid);
+	foreach($faqGuids as $faqGuid) {
+		$faq = get_entity($faqGuid);
 
-        if($faq->getSubtype() == "faq") {
-            $faq->category = $category;
+		if($faq->getSubtype() == "faq") {
+			$faq->category = $category;
 
-            if($faq->save()) {
-                system_message(elgg_echo("faq:change_category:success"));
-                $success = true;
-            } else {
-                register_error(elgg_echo("faq:change_category:error:save"));
-            }
-        } else {
-            register_error(elgg_echo("faq:change_category:error:no_faq"));
-        }
-    }
+			if($faq->save()) {
+				system_message(elgg_echo("faq:change_category:success"));
+				$success = true;
+			} else {
+				register_error(elgg_echo("faq:change_category:error:save"));
+			}
+		} else {
+			register_error(elgg_echo("faq:change_category:error:no_faq"));
+		}
+	}
 } else {
-    register_error(elgg_echo("faq:change_category:error:input"));
+	register_error(elgg_echo("faq:change_category:error:input"));
 }
 
 if($success) {
-    forward(elgg_get_site_url() . "faq/list?categoryId=" . get_metastring_id($category));
+	forward(elgg_get_site_url() . "faq/list?categoryId=" . get_metastring_id($category));
 } else {
-    forward(REFERER);
+	forward(REFERER);
 }
